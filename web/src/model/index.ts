@@ -2,19 +2,23 @@ import { HistoryLocation } from "@buildo/bento/data";
 
 export { HistoryLocation };
 
-export type CurrentView = { view: "explorer" };
+export type CurrentView = { view: "favoriteCars" } | { view: "searchResults" };
 
 export function locationToView(location: HistoryLocation): CurrentView {
-  switch (location.search.view) {
+  switch (location.pathname) {
+    case "/searchResults":
+      return { view: "searchResults" };
     default:
-      return { view: "explorer" };
+      return { view: "favoriteCars" };
   }
 }
 
 export function viewToLocation(view: CurrentView): HistoryLocation {
   switch (view.view) {
-    case "explorer":
-      return { pathname: "/Explorer", search: {} };
+    case "searchResults":
+      return { pathname: "/searchResults", search: {} };
+    case "favoriteCars":
+      return { pathname: "/favoriteCars", search: {} };
   }
 }
 
@@ -31,7 +35,7 @@ export type GeoJSONFeature = {
     length: string;
     elevationGain: number;
     url: string;
-  } & FavoriteCar;
+  } & Car;
   geometry: Geometry;
 };
 export type GeoJSONFeatureCollection = {
@@ -41,7 +45,7 @@ export type GeoJSONFeatureCollection = {
 
 export type Route = GeoJSONFeature & { id: string };
 
-export type FavoriteCar = {
+export type Car = {
   name: string;
   address: string;
   engine: string;

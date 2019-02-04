@@ -1,9 +1,6 @@
 import { Query, location, available } from "@buildo/bento/data";
 import * as API from "API";
-import { locationToView, Route } from "model";
-import * as stringToColor from "string-to-color";
-import * as geoJsonLength from "geojson-length";
-import { Option, fromNullable, none, some } from "fp-ts/lib/Option";
+import { locationToView, Route, Car } from "model";
 
 export { location };
 
@@ -17,4 +14,10 @@ export const favoriteCars = Query({
   cacheStrategy: available,
   params: {},
   fetch: (): Promise<Route[]> => API.getFavoriteCars()
+});
+
+export const searchResults = Query({
+  cacheStrategy: available,
+  params: {},
+  fetch: (): Promise<Car[]> => API.getSearchResults()
 });

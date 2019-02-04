@@ -1,16 +1,14 @@
-import { FavoriteCar, Route } from "model";
+import { Car, Route } from "model";
 
-export const getSearchResults = (): Promise<any> => {
-  return fetch(
-    "https://otcybcnpcfjrvwkzhm.our.buildo.io/https://www.autouncle.it/en/cars_search/VW/Transporter?s%5Bclose_to_postcode%5D=20143&s%5Bdistance_in_meters%5D=200000&s%5Blatitude%5D=45.4643&s%5Blongitude%5D=9.1895&s%5Bmax_price%5D=10000&s%5Border_by%5D=cars.price+ASC"
-  )
-    .then(res => res.text())
-    .then(res => console.log(res));
+export const getSearchResults = (): Promise<Car[]> => {
+  return fetch("https://shielded-spire-20273.herokuapp.com/searchResults").then(
+    res => res.json() as Promise<Car[]>
+  );
 };
 
 export const getFavoriteCars = () => {
-  return fetch("http://localhost:1337/localhost:8081/favoriteCars")
-    .then(res => res.json() as Promise<FavoriteCar[]>)
+  return fetch("https://shielded-spire-20273.herokuapp.com/favoriteCars")
+    .then(res => res.json() as Promise<Car[]>)
     .then(
       (cars): Route[] =>
         cars.map(car => ({

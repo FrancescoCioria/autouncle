@@ -1,15 +1,14 @@
 import * as React from "react";
 import * as cx from "classnames";
 import View from "View";
-import { Route, viewToLocation, FavoriteCar } from "model";
+import { Route } from "model";
 import { Option, some } from "fp-ts/lib/Option";
-import Button from "@buildo/bento/components/Button";
 import { doUpdateLocation } from "commands";
 import { declareCommands } from "react-avenger";
+import TextOverflow from "TextOverflow/TextOverflow";
 
 import "./sideBar.scss";
 import "@buildo/bento/components/button.scss";
-import TextOverflow from "TextOverflow/TextOverflow";
 
 const Route = (props: {
   route: Route;

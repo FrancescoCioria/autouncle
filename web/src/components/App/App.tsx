@@ -3,6 +3,7 @@ import { declareQueries } from "@buildo/bento/data";
 import { currentView } from "queries";
 import View from "View";
 import Explorer from "Explorer/Explorer";
+import SearchResults from "SearchResults/SearchResults";
 
 const queries = declareQueries({ currentView });
 
@@ -16,7 +17,10 @@ class App extends React.Component<Props> {
 
     return (
       <View className="app" height="100%">
-        {this.props.currentView.value.view === "explorer" && <Explorer />}
+        {this.props.currentView.value.view === "favoriteCars" && <Explorer />}
+        {this.props.currentView.value.view === "searchResults" && (
+          <SearchResults />
+        )}
       </View>
     );
   }
