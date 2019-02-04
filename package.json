@@ -2,7 +2,7 @@
   "name": "bike-routes-web",
   "version": "1.0.0",
   "scripts": {
-    "start": "yarn start-web & yarn start-server",
+    "start": "yarn web-start & yarn server-start",
     "web-start": "scriptoni web-dev --paths web/paths.js -c ./web/config",
     "web-build": "NODE_ENV=production bento web-build -c web/config --paths web/paths.js --webpackConfig web/webpackConfig.js",
     "deploy": "yarn build && git add docs && git commit -m 'update github page' && git push",
