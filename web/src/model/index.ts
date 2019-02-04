@@ -1,0 +1,93 @@
+import { HistoryLocation } from "@buildo/bento/data";
+import { Option, fromNullable } from "fp-ts/lib/Option";
+
+export { HistoryLocation };
+
+export type CurrentView =
+  | { view: "explorer" }
+  | { view: "details"; routeId: Option<string> };
+
+export function locationToView(location: HistoryLocation): CurrentView {
+  switch (location.search.view) {
+    case "details":
+      return {
+        view: "details",
+        routeId: fromNullable(location.search.routeId)
+      };
+    default:
+      return { view: "explorer" };
+  }
+}
+
+export function viewToLocation(view: CurrentView): HistoryLocation {
+  switch (view.view) {
+    case "details":
+      return {
+        pathname: "/Explorer",
+        search: { view: "details", routeId: view.routeId.getOrElse("") }
+      };
+    case "explorer":
+      return { pathname: "/Explorer", search: {} };
+  }
+}
+
+export type Content = {
+  name: string;
+  type: "dir" | "file";
+  url: string;
+  download_url: string;
+  html_url: string;
+};
+
+export type Geometry = {
+  type: "LineString";
+  coordinates: Array<[number, number, number?]>;
+};
+
+export type GeoJSONFeature = {
+  type: "Feature";
+  properties: {
+    name: string;
+    color: string;
+    length: string;
+    elevationGain: number;
+    url: string;
+  } & FavoriteCar;
+  geometry: Geometry;
+};
+export type GeoJSONFeatureCollection = {
+  type: "FeatureCollection";
+  features: GeoJSONFeature[];
+};
+
+export type Route = GeoJSONFeature & { id: string };
+
+export type ScrapedFavoriteCar = {
+  name: string;
+  address: string;
+  engine: string;
+  year: string;
+  km: string;
+  price: string;
+  image: string;
+  url: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+};
+
+export type FavoriteCar = {
+  name: string;
+  address: string;
+  engine: string;
+  year: string;
+  km: string;
+  price: number;
+  image: string;
+  url: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+};

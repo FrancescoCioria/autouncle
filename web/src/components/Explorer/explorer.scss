@@ -1,0 +1,10 @@
+.explorer {
+  height: 100%;
+}
+
+.is-phone,
+.is-tablet {
+  .explorer {
+    flex-direction: column-reverse !important;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "autouncle-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "node-fetch": "^2.3.0",
+    "scrape-it": "^5.1.4"
+  },
+  "engines": {
+    "node": "10.x"
+  }
+}

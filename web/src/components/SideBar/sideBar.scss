@@ -1,0 +1,87 @@
+@import "../../theme/variables.scss";
+
+.side-bar {
+  width: 280px;
+  padding: 16px 0;
+  background: #fff;
+  overflow: auto;
+
+  h2 {
+    margin: 0;
+    padding: 0 26px;
+    margin-bottom: 8px;
+  }
+
+  .route {
+    border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+    margin: 5px;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    padding-bottom: 8px;
+
+    &:hover,
+    &.is-selected {
+      background: #f5f5f5;
+      border-color: $azure;
+    }
+
+    .name {
+      margin: 8px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .property {
+      margin: 0 8px;
+      label {
+        color: #666;
+        width: 60px;
+        font-size: 13px;
+        font-weight: 400;
+      }
+
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .actions {
+      margin-top: 16px;
+    }
+  }
+}
+
+.is-phone,
+.is-tablet {
+  .side-bar {
+    flex-direction: row !important;
+    width: 100%;
+    padding: 0;
+
+    h2 {
+      display: none;
+    }
+
+    .route {
+      border-bottom: none;
+      width: 260px;
+      height: 160px;
+
+      &:not(:last-child) {
+        border-right: 1px solid #eaeaea;
+      }
+
+      &:hover {
+        background: unset;
+      }
+
+      &.is-selected {
+        background: #f5f5f5;
+      }
+
+      .actions {
+        margin-top: auto;
+      }
+    }
+  }
+}
