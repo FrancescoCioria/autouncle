@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/scriptoni/lib/scripts/webpack/tsconfig.json",
+  "extends": "../node_modules/scriptoni/lib/scripts/webpack/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "noUnusedLocals": false,

@@ -54,7 +54,7 @@ class App extends React.PureComponent<Props> {
   map: Option<mapboxgl.Map> = none;
   popupSelectedRoute: mapboxgl.Popup = new mapboxgl.Popup(popupSettings);
   popupHoveredRoute: mapboxgl.Popup = new mapboxgl.Popup(popupSettings);
-  positionWatch: Option<number>;
+  positionWatch: Option<number> = none;
 
   initializeMap() {
     (mapboxgl as any).accessToken =

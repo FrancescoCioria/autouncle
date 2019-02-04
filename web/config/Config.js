@@ -17,12 +17,12 @@ CONFIG_API_ENDPOINT=/myDevApi yarn run build
 
 */
 
-const t = require('io-ts');
+const t = require("io-ts");
 
-module.exports = t.strict(
+module.exports = t.interface(
   {
     port: t.union([t.number, t.undefined]),
     bundle: t.strict({})
   },
-  'Config'
+  "Config"
 );

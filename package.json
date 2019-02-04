@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "scripts": {
     "start": "yarn start-web & yarn start-server",
-    "start-web": "bento web-dev -c ./config",
-    "build": "NODE_ENV=production bento web-build -c ./config --paths ./paths.js --webpackConfig ./webpackConfig.js",
+    "web-start": "scriptoni web-dev --paths web/paths.js -c ./web/config",
+    "web-build": "NODE_ENV=production bento web-build -c web/config --paths web/paths.js --webpackConfig web/webpackConfig.js",
     "deploy": "yarn build && git add docs && git commit -m 'update github page' && git push",
     "prettier-check": "bento prettier-check",
     "prettier-write": "bento prettier-write",
-    "start-server": "node server"
+    "server-start": "node server/server"
   },
   "dependencies": {
     "@buildo/bento": "^10.0.0",
@@ -46,5 +46,8 @@
     "@types/react-select": "^1.1.0",
     "@types/react-transition-group": "^2.0.6",
     "@types/remarkable": "^1.7.2"
+  },
+  "resolutions": {
+    "scriptoni": "^6.1.0"
   }
 }
