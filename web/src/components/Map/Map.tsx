@@ -47,14 +47,12 @@ type Props = {
   onRouteHover: (route: Option<Route>) => void;
   onRouteSelect: (route: Route) => void;
   innerRef: (map: Option<mapboxgl.Map>) => void;
-  startPosition: "userLocation" | "firstRoute";
 };
 
 class App extends React.PureComponent<Props> {
   map: Option<mapboxgl.Map> = none;
   popupSelectedRoute: mapboxgl.Popup = new mapboxgl.Popup(popupSettings);
   popupHoveredRoute: mapboxgl.Popup = new mapboxgl.Popup(popupSettings);
-  positionWatch: Option<number> = none;
 
   initializeMap() {
     (mapboxgl as any).accessToken =
@@ -64,8 +62,8 @@ class App extends React.PureComponent<Props> {
       container: "map",
       style: "mapbox://styles/francescocioria/cjqi3u6lmame92rmw6aw3uyhm",
       center: {
-        lat: 45.45, // parseFloat(localStorage.getItem("start_lat") || "0"),
-        lng: 9.2 // parseFloat(localStorage.getItem("start_lng") || "0")
+        lat: 45.45,
+        lng: 9.2
       },
       zoom: 9.0,
       maxZoom: 11.0
@@ -76,19 +74,6 @@ class App extends React.PureComponent<Props> {
 
       this.addLayers();
       this.addMarkers();
-
-      // if (this.props.startPosition === "userLocation") {
-      //   document
-      //     .querySelector<HTMLButtonElement>(".mapboxgl-ctrl-geolocate")!
-      //     .click();
-      // }
-
-      if (
-        this.props.startPosition === "firstRoute" &&
-        this.props.routes.length > 0
-      ) {
-        this.flyToRoute(this.props.routes[0], { animate: false, padding: 80 });
-      }
     });
 
     if (md.isDesktop) {
@@ -105,10 +90,7 @@ class App extends React.PureComponent<Props> {
           enableHighAccuracy: true
         },
         trackUserLocation: true,
-        showUserLocation: true,
-        fitBoundsOptions: {
-          maxZoom: this.props.startPosition === "firstRoute" ? 15 : 11
-        }
+        showUserLocation: true
       })
     );
 
@@ -270,13 +252,6 @@ class App extends React.PureComponent<Props> {
   componentDidMount() {
     this.initializeMap();
     this.props.innerRef(this.map);
-
-    // this.positionWatch = some(
-    //   navigator.geolocation.watchPosition(position => {
-    //     localStorage.setItem("start_lat", String(position.coords.latitude));
-    //     localStorage.setItem("start_lng", String(position.coords.longitude));
-    //   })
-    // );
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -291,10 +266,6 @@ class App extends React.PureComponent<Props> {
     ) {
       this.flyToRoute(this.props.selectedRoute.value);
     }
-  }
-
-  componentWillUnmount() {
-    this.positionWatch.map(navigator.geolocation.clearWatch);
   }
 
   render() {

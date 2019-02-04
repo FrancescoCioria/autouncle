@@ -15,7 +15,6 @@ const Route = (props: {
   route: Route;
   onClick: () => void;
   isSelected: boolean;
-  onDetailsClick: (e: React.SyntheticEvent<HTMLDivElement, Event>) => void;
 }) => {
   const properties = props.route.properties;
   return (
@@ -86,12 +85,6 @@ class SideBar extends React.Component<Props> {
               this.props.selectedRoute.isSome() &&
               this.props.selectedRoute.value === route
             }
-            onDetailsClick={e => {
-              e.stopPropagation();
-              this.props.doUpdateLocation(
-                viewToLocation({ view: "details", routeId: some(route.id) })
-              );
-            }}
           />
         ))}
       </View>

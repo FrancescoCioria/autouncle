@@ -2,7 +2,7 @@ import * as React from "react";
 import { declareQueries } from "@buildo/bento/data";
 import { favoriteCars } from "queries";
 import View from "View";
-import Map, { getRouteDistanceInPixels } from "Map/Map";
+import Map from "Map/Map";
 import SideBar from "SideBar/SideBar";
 import { Route } from "model";
 import { Option, none, some } from "fp-ts/lib/Option";
@@ -49,13 +49,6 @@ class Explorer extends React.Component<Props, State> {
       return null;
     }
 
-    // const sortedRoutes: Route[] = this.map.fold(routes.value, map =>
-    //   sortBy(
-    //     routes.value,
-    //     getRouteDistanceInPixels(route, map.getCenter(), map)
-    //   )
-    // );
-
     return (
       <View className="explorer" grow>
         <SideBar
@@ -73,7 +66,6 @@ class Explorer extends React.Component<Props, State> {
             this.map = map;
             this.forceUpdate();
           }}
-          startPosition="userLocation"
         />
       </View>
     );
