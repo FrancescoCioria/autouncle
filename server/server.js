@@ -125,4 +125,4 @@ app.get("/favoriteCars", (_, res) => {
   getFavoriteCars().then(data => res.json(data));
 });
 
-app.listen(8081);
+app.listen(process.env.PORT || 8081);
