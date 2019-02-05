@@ -11,19 +11,33 @@ import {
 
 const searches = [
   ["VW", "Transporter"],
+  ["VW", "Caravelle"],
   ["Renault", "Trafic"],
   ["Opel", "Vivaro"],
   ["Fiat", "Scudo"],
   ["Fiat", "Ducato"],
   ["Mercedes", "Vito"],
   ["Hyundai", "H-1"],
+  ["Hyundai", "H 100"],
+  ["Hyundai", "H 200"],
   ["Nissan", "Vanette"],
+  ["Nissan", "Primastar"],
+  ["Nissan", "NV200"],
   ["Peugeot", "Expert"],
   ["Citroen", "Jumpy"],
-  ["Ford", "Transit"]
+  ["Ford", "Transit"],
+  ["Ford", "Transit 280S"],
+  ["Ford", "Transit Tourneo"],
+  ["Ford", "Tourneo", "280S"],
+  ["Kia", "Bongo"],
+  ["Mitsubishi", "L300"],
+  ["Mitsubishi", "L400"],
+  ["Mitsubishi", "Space Gear"],
+  ["Mazda", "Bongo"],
+  ["Toyota", "HiAce"]
 ];
 
-const computeSearchUrl = (brand: string, model: string) => {
+const computeSearchUrl = (brand: string, model: string, variant?: string) => {
   const query = queryString.stringify({
     "s[brand]": brand,
     "s[car_model]": model,
@@ -31,7 +45,8 @@ const computeSearchUrl = (brand: string, model: string) => {
     "s[distance_in_meters]": 75000,
     "s[min_price]": 510,
     "s[max_price]": 3000,
-    "s[order_by]": "cars.price+ASC"
+    "s[order_by]": "cars.price+ASC",
+    "s[variant]": variant
   });
 
   return `https://www.autouncle.it/en/cars_search?${query}`;
@@ -41,10 +56,10 @@ let cachedSearchResults: Car[] = [];
 
 const updateSearchResults = (): void => {
   Promise.all(
-    searches.map(([brand, model]) => {
+    searches.map(([brand, model, variant]) => {
       return scrapeIt<{ cars: ScrapedCar[] }>(
         {
-          url: computeSearchUrl(brand, model),
+          url: computeSearchUrl(brand, model, variant),
           headers: {
             accept:
               "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
