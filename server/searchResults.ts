@@ -10,16 +10,16 @@ import {
 } from "./utils";
 
 const searches = [
-  // ["VW", "Transporter"],
-  // ["Renault", "Trafic"],
-  // ["Opel", "Vivaro"],
-  // ["Fiat", "Scudo"],
-  // ["Fiat", "Ducato"],
-  // ["Mercedes", "Vito"],
-  // ["Hyundai", "H-1"],
-  // ["Nissan", "Vanette"],
-  // ["Peugeot", "Expert"],
-  // ["Citroen", "Jumpy"],
+  ["VW", "Transporter"],
+  ["Renault", "Trafic"],
+  ["Opel", "Vivaro"],
+  ["Fiat", "Scudo"],
+  ["Fiat", "Ducato"],
+  ["Mercedes", "Vito"],
+  ["Hyundai", "H-1"],
+  ["Nissan", "Vanette"],
+  ["Peugeot", "Expert"],
+  ["Citroen", "Jumpy"],
   ["Ford", "Transit"]
 ];
 
