@@ -77,6 +77,8 @@ const updateSearchResults = (): void => {
             data: {
               name:
                 ".listing-item-car-details-headline-wrapper > h3 > a > span",
+              brand:
+                ".listing-item-car-details-headline-wrapper > h3 > a > span > b",
               address: {
                 selector: ".car-specification.location > span",
                 convert: (address: string) =>

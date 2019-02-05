@@ -30,6 +30,7 @@ const updateFavoriteCars = (): void => {
         listItem: ".item_row",
         data: {
           name: ".car_details .center .facts > h3",
+          brand: ".car_name > a > b",
           address: ".cell.location",
           engine: ".cell.engine.motor",
           year: ".cell.year",

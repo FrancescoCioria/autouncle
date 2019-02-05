@@ -2,8 +2,8 @@ import * as React from "react";
 import { declareQueries } from "@buildo/bento/data";
 import { searchResults } from "queries";
 import View from "View";
-import { Option, none, some } from "fp-ts/lib/Option";
-import TextOverflow from "TextOverflow/TextOverflow";
+import Dropdown from "../Dropdown";
+import sortBy = require("lodash/sortBy");
 
 import "./searchResults.scss";
 
@@ -11,8 +11,14 @@ const queries = declareQueries({ searchResults });
 
 type Props = typeof queries.Props;
 
-class SearchResults extends React.Component<Props> {
-  map: Option<mapboxgl.Map> = none;
+type State = {
+  sorting: "price" | "distanceFromMilano" | "distanceFromBurago" | "brand";
+};
+
+class SearchResults extends React.Component<Props, State> {
+  state: State = {
+    sorting: "price"
+  };
 
   render() {
     const cars = this.props.searchResults;
@@ -20,12 +26,35 @@ class SearchResults extends React.Component<Props> {
       return null;
     }
 
+    const options: { value: State["sorting"]; label: string }[] = [
+      { value: "price", label: "Prezzo" },
+      { value: "distanceFromMilano", label: "Distanza da buildo" },
+      { value: "distanceFromBurago", label: "Distanza da burago" },
+      { value: "brand", label: "Brand (a-z)" }
+    ];
+
+    const sortedCars = sortBy(cars.value, this.state.sorting);
+
     return (
       <View className="search-results" column grow>
-        <h2 style={{ marginLeft: 16, marginBottom: 0 }}>
-          {cars.value.length} Risultati
-        </h2>
-        {cars.value.map(car => {
+        <View
+          shrink={false}
+          vAlignContent="center"
+          style={{ paddingLeft: 16, paddingTop: 8 }}
+        >
+          <h2 style={{ margin: 0, marginRight: 32 }}>
+            {cars.value.length} Risultati
+          </h2>
+          <Dropdown
+            style={{ width: 200 }}
+            value={this.state.sorting}
+            options={options}
+            onChange={value =>
+              this.setState({ sorting: value as State["sorting"] })
+            }
+          />
+        </View>
+        {sortedCars.map(car => {
           const distanceFromMilano = car.distanceFromMilano
             ? `da buildo: ${car.distanceFromMilano.toFixed(0)} km`
             : "";
