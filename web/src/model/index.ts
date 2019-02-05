@@ -1,6 +1,6 @@
 import { HistoryLocation } from "@buildo/bento/data";
-import { Car, SearchResultCar } from "../../../server/model";
-export { Car, SearchResultCar };
+import { Car } from "../../../server/model";
+export { Car };
 
 export { HistoryLocation };
 
