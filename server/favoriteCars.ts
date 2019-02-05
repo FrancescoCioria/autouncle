@@ -6,10 +6,12 @@ import {
   addDistance,
   addHostnameToUrl
 } from "./utils";
-import { ScrapedCar } from "./model";
+import { ScrapedCar, Car } from "./model";
 
-export default () => {
-  return scrapeIt<{ cars: ScrapedCar[] }>(
+let cachedFavoriteCars: Car[] = [];
+
+const updateFavoriteCars = (): void => {
+  scrapeIt<{ cars: ScrapedCar[] }>(
     {
       url: "https://www.autouncle.it/it/auto-preferite",
       headers: {
@@ -79,5 +81,14 @@ export default () => {
         )
       );
     })
-    .then(cars => sortBy(cars, "price"));
+    .then(cars => sortBy(cars, "price"))
+    .then(cars => {
+      cachedFavoriteCars = cars;
+    });
 };
+
+updateFavoriteCars();
+
+setInterval(updateFavoriteCars, 30000); // every 30 seconds
+
+export default () => Promise.resolve(cachedFavoriteCars);

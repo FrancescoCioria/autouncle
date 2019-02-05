@@ -1,7 +1,7 @@
 import * as scrapeIt from "scrape-it";
 import { flatten, sortBy } from "lodash";
 import * as queryString from "query-string";
-import { ScrapedCar } from "./model";
+import { ScrapedCar, Car } from "./model";
 import {
   addCoordinatesToCars,
   parsePrice,
@@ -37,8 +37,10 @@ const computeSearchUrl = (brand: string, model: string) => {
   return `https://www.autouncle.it/en/cars_search?${query}`;
 };
 
-export default () => {
-  return Promise.all(
+let cachedSearchResults: Car[] = [];
+
+const updateSearchResults = (): void => {
+  Promise.all(
     searches.map(([brand, model]) => {
       return scrapeIt<{ cars: ScrapedCar[] }>(
         {
@@ -99,5 +101,14 @@ export default () => {
           (c.distanceFromMilano === null || c.distanceFromMilano < 50)
       )
     )
-    .then(cars => sortBy(cars, "price"));
+    .then(cars => sortBy(cars, "price"))
+    .then(cars => {
+      cachedSearchResults = cars;
+    });
 };
+
+updateSearchResults();
+
+setInterval(updateSearchResults, 30000); // every 30 seconds
+
+export default () => Promise.resolve(cachedSearchResults);
