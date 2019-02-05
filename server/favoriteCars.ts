@@ -1,6 +1,11 @@
 import * as scrapeIt from "scrape-it";
 import { groupBy, values, flatten, mapValues, sortBy } from "lodash";
-import { addCoordinatesToCars, parsePrice } from "./utils";
+import {
+  addCoordinatesToCars,
+  parsePrice,
+  addDistance,
+  addHostnameToUrl
+} from "./utils";
 import { ScrapedCar } from "./model";
 
 export default () => {
@@ -43,6 +48,8 @@ export default () => {
     .then(res => res.data.cars.filter(car => car.name.length > 0))
     .then(parsePrice)
     .then(addCoordinatesToCars)
+    .then(addDistance)
+    .then(addHostnameToUrl)
     .then(cars => {
       const carsGroupedByCoordinates = groupBy(cars, c =>
         JSON.stringify(c.coordinates)

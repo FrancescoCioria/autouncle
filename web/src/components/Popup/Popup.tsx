@@ -21,11 +21,7 @@ export default (props: { route: Route }) => {
           borderTopRightRadius: 3
         }}
       />
-      <a
-        href={`https://www.autouncle.it${properties.url}`}
-        target="_blank"
-        className="name"
-      >
+      <a href={properties.url} target="_blank" className="name">
         {properties.name}
       </a>
       <View className="property" vAlignContent="bottom">

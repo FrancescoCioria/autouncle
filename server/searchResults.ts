@@ -1,8 +1,13 @@
 import * as scrapeIt from "scrape-it";
 import { flatten, sortBy } from "lodash";
 import * as queryString from "query-string";
-import { ScrapedCar, SearchResultCar } from "./model";
-import { addCoordinatesToCars, parsePrice, haversineFormula } from "./utils";
+import { ScrapedCar } from "./model";
+import {
+  addCoordinatesToCars,
+  parsePrice,
+  addDistance,
+  addHostnameToUrl
+} from "./utils";
 
 const searches = [
   // ["VW", "Transporter"],
@@ -17,9 +22,6 @@ const searches = [
   // ["Citroen", "Jumpy"],
   ["Ford", "Transit"]
 ];
-
-const malaga4 = { lat: 45.4443763, lng: 9.1591521 };
-const burago = { lat: 45.5915137, lng: 9.374666 };
 
 const computeSearchUrl = (brand: string, model: string) => {
   const query = queryString.stringify({
@@ -88,21 +90,8 @@ export default () => {
     )
     .then(parsePrice)
     .then(addCoordinatesToCars)
-    .then(
-      (cars): SearchResultCar[] =>
-        cars.map(c => {
-          return {
-            ...c,
-            url: `https://www.autouncle.it${c.url}`,
-            distanceFromMilano: c.coordinates
-              ? haversineFormula(c.coordinates, malaga4)
-              : null,
-            distanceFromBurago: c.coordinates
-              ? haversineFormula(c.coordinates, burago)
-              : null
-          };
-        })
-    )
+    .then(addDistance)
+    .then(addHostnameToUrl)
     .then(cars =>
       cars.filter(
         c =>

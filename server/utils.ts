@@ -2,6 +2,7 @@ import * as queryString from "query-string";
 import fetch from "node-fetch";
 import { sortBy } from "lodash";
 import {
+  Car,
   ScrapedCar,
   ScrapedCarWithParsedPrice,
   ScrapedCarWithParsedPriceAndCoordinates,
@@ -98,3 +99,23 @@ export const parsePrice = (
     };
   });
 };
+
+const malaga4 = { lat: 45.4443763, lng: 9.1591521 };
+const burago = { lat: 45.5915137, lng: 9.374666 };
+export const addDistance = (
+  cars: ScrapedCarWithParsedPriceAndCoordinates[]
+): Car[] =>
+  cars.map(c => {
+    return {
+      ...c,
+      distanceFromMilano: c.coordinates
+        ? haversineFormula(c.coordinates, malaga4)
+        : null,
+      distanceFromBurago: c.coordinates
+        ? haversineFormula(c.coordinates, burago)
+        : null
+    };
+  });
+
+export const addHostnameToUrl = (cars: Car[]): Car[] =>
+  cars.map(c => ({ ...c, url: `https://www.autouncle.it${c.url}` }));

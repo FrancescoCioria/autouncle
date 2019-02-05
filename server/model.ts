@@ -22,12 +22,10 @@ export type ScrapedCarWithParsedPriceAndCoordinates = ScrapedCarWithParsedPrice 
   } | null;
 };
 
-export type SearchResultCar = ScrapedCarWithParsedPriceAndCoordinates & {
+export type Car = ScrapedCarWithParsedPriceAndCoordinates & {
   distanceFromMilano: number | null;
   distanceFromBurago: number | null;
 };
-
-export type Car = ScrapedCarWithParsedPriceAndCoordinates;
 
 export type OpenCageDataResult = {
   components: { _type: "village" | "neighbourhood" | "city" };
