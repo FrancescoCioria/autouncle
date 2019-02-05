@@ -11,13 +11,11 @@ export const currentView = Query({
 });
 
 export const favoriteCars = Query({
-  cacheStrategy: available,
   params: {},
   fetch: (): Promise<Route[]> => API.getFavoriteCars()
 });
 
 export const searchResults = Query({
-  cacheStrategy: available,
   params: {},
   fetch: (): Promise<Car[]> => API.getSearchResults()
 });
