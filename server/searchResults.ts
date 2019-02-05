@@ -31,7 +31,6 @@ const searches = [
   ["Peugeot", "Boxer"],
   ["Citroen", "Jumpy"],
   ["Citroen", "Jumper"],
-  ["Ford", "Transit"],
   ["Ford", "Transit 280S"],
   ["Ford", "Transit Tourneo"],
   ["Ford", "Tourneo", "280S"],
