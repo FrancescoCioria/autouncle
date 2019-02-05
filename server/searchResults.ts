@@ -13,18 +13,24 @@ const searches = [
   ["VW", "Transporter"],
   ["VW", "Caravelle"],
   ["Renault", "Trafic"],
+  ["Renault", "Master"],
   ["Opel", "Vivaro"],
+  ["Opel", "Movano"],
   ["Fiat", "Scudo"],
   ["Fiat", "Ducato"],
   ["Mercedes", "Vito"],
+  ["Mercedes", "Viano"],
   ["Hyundai", "H-1"],
   ["Hyundai", "H 100"],
   ["Hyundai", "H 200"],
   ["Nissan", "Vanette"],
   ["Nissan", "Primastar"],
   ["Nissan", "NV200"],
+  ["Nissan", "Interstar"],
   ["Peugeot", "Expert"],
+  ["Peugeot", "Boxer"],
   ["Citroen", "Jumpy"],
+  ["Citroen", "Jumper"],
   ["Ford", "Transit"],
   ["Ford", "Transit 280S"],
   ["Ford", "Transit Tourneo"],
@@ -135,6 +141,6 @@ const updateSearchResults = (): void => {
 
 updateSearchResults();
 
-setInterval(updateSearchResults, 30000); // every 30 seconds
+setInterval(updateSearchResults, 300000); // every 5 minutes
 
 export default () => Promise.resolve(cachedSearchResults);
