@@ -1,6 +1,7 @@
-const scrapeIt = require("scrape-it");
-const { flatten, sortBy } = require("lodash");
-const queryString = require("query-string");
+import * as scrapeIt from "scrape-it";
+import { flatten, sortBy } from "lodash";
+import * as queryString from "query-string";
+import { SearchResultCar, ObjectOmit } from "../web/src/model";
 
 const searches = [
   ["VW", "Transporter"],
@@ -16,7 +17,7 @@ const searches = [
   ["Ford", "Transit"]
 ];
 
-const computeSearchUrl = (brand, model) => {
+const computeSearchUrl = (brand: string, model: string) => {
   const query = queryString.stringify({
     "s[brand]": brand,
     "s[car_model]": model,
@@ -30,10 +31,18 @@ const computeSearchUrl = (brand, model) => {
   return `https://www.autouncle.it/en/cars_search?${query}`;
 };
 
-module.exports = () => {
+type ScrapedSearchResultCar = ObjectOmit<
+  SearchResultCar,
+  "price" | "distanceFromMilan" | "distanceFromCarnate"
+> & {
+  price: string;
+  distance: string;
+};
+
+export default () => {
   return Promise.all(
     searches.map(([brand, model]) => {
-      return scrapeIt(
+      return scrapeIt<{ cars: ScrapedSearchResultCar[] }>(
         {
           url: computeSearchUrl(brand, model),
           headers: {
@@ -58,6 +67,7 @@ module.exports = () => {
               year: ".car-specification.year",
               km: ".car-specification.km",
               price: ".price-container .price",
+              distance: ".car-specification.location > div",
               image: {
                 selector: ".car-picture > meta",
                 attr: "content"
@@ -80,20 +90,23 @@ module.exports = () => {
           !c.name.toLowerCase().includes("rent")
       )
     )
-    .then(cars =>
-      cars.map(c => {
-        const price = parseInt(
-          c.price
-            .replace("€", "")
-            .replace(".", "")
-            .replace(",", "")
-        );
-        return {
-          ...c,
-          url: `https://www.autouncle.it${c.url}`,
-          price
-        };
-      })
+    .then(
+      (cars): SearchResultCar[] =>
+        cars.map(c => {
+          const price = parseInt(
+            c.price
+              .replace("€", "")
+              .replace(".", "")
+              .replace(",", "")
+          );
+          return {
+            ...c,
+            url: `https://www.autouncle.it${c.url}`,
+            distanceFromMilano: "",
+            distanceFromCarnate: "",
+            price
+          };
+        })
     )
     .then(cars => sortBy(cars, "price"));
 };

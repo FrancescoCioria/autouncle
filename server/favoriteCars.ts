@@ -1,10 +1,25 @@
-const scrapeIt = require("scrape-it");
-const fetch = require("node-fetch");
-const querystring = require("querystring");
-const { groupBy, values, flatten, mapValues, sortBy } = require("lodash");
+import * as scrapeIt from "scrape-it";
+import fetch from "node-fetch";
+import * as queryString from "query-string";
+import { groupBy, values, flatten, mapValues, sortBy } from "lodash";
+import { Car, ObjectOmit } from "../web/src/model";
 
-module.exports = () => {
-  return scrapeIt(
+type ScrapedCard = ObjectOmit<Car, "price"> & {
+  price: string;
+};
+
+type OpenCageDataResult = {
+  components: { _type: "village" | "neighbourhood" | "city" };
+  formatted: string;
+  confidence: number;
+  geometry: {
+    lat: number;
+    lng: number;
+  };
+};
+
+export default () => {
+  return scrapeIt<{ cars: ScrapedCard[] }>(
     {
       url: "https://www.autouncle.it/it/auto-preferite",
       headers: {
@@ -41,24 +56,29 @@ module.exports = () => {
     }
   )
     .then(res => res.data.cars.filter(car => car.name.length > 0))
-    .then(cars =>
-      cars.map(c => {
-        const price = parseFloat(c.price);
-        return {
-          ...c,
-          price: c.price.includes(".") ? price * 1000 : price
-        };
-      })
+    .then(
+      (cars): Car[] =>
+        cars.map(c => {
+          const price = parseFloat(c.price);
+          return {
+            ...c,
+            price: c.price.includes(".") ? price * 1000 : price
+          };
+        })
     )
     .then(cars => {
       return Promise.all(
         cars.map(car => {
-          return fetch(
-            `https://api.opencagedata.com/geocode/v1/json?q=${querystring.escape(
-              car.address
-            )}&key=55f3c34bb9a3424d96a72154deca11ea&no_annotations=1&language=en`
-          )
-            .then(res => res.json())
+          const query = queryString.stringify({
+            q: car.address,
+            key: "55f3c34bb9a3424d96a72154deca11ea",
+            no_annotations: 1,
+            language: "en"
+          });
+          return fetch(`https://api.opencagedata.com/geocode/v1/json?${query}`)
+            .then(
+              res => res.json() as Promise<{ results: OpenCageDataResult[] }>
+            )
             .then(res => {
               const results = res.results.filter(
                 r =>

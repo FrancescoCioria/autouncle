@@ -8,7 +8,7 @@
     "deploy": "yarn web-build && git add docs && git commit -m 'update github page' && git push && git push heroku master",
     "prettier-check": "bento prettier-check",
     "prettier-write": "bento prettier-write",
-    "server-start": "node server/server"
+    "server-start": "yarn ts-node --files --project server/tsconfig.json server/server.ts"
   },
   "dependencies": {
     "@buildo/bento": "^10.0.0",
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
+    "@types/cors": "^2.8.4",
     "@types/file-saver": "^2.0.0",
     "@types/fixed-data-table": "^0.6.32",
     "@types/lodash": "^4.14.93",
@@ -41,6 +42,7 @@
     "@types/node": "^9.3.0",
     "@types/node-fetch": "^2.1.4",
     "@types/qs": "^6.5.1",
+    "@types/query-string": "^6.2.0",
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
     "@types/react-intl": "^2.3.3",

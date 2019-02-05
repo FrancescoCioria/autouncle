@@ -1,0 +1,10 @@
+{
+  "extends": "../node_modules/scriptoni/lib/scripts/webpack/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "lib": ["esnext"]
+  },
+  "include": ["**/*", "../web/src/model/index.ts"]
+}

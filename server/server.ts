@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const getFavoriteCars = require("./favoriteCars");
-const getSearchResults = require("./searchResults");
+import * as express from "express";
+import * as cors from "cors";
+import getFavoriteCars from "./favoriteCars";
+import getSearchResults from "./searchResults";
 
 const app = express();
 
