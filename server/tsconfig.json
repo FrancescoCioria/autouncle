@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "lib": ["esnext"]
+    "lib": ["esnext"],
+    "pretty": true
   },
   "include": ["**/*", "../web/src/model/index.ts"]
 }

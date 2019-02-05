@@ -6,7 +6,6 @@ import Map from "Map/Map";
 import SideBar from "SideBar/SideBar";
 import { Route } from "model";
 import { Option, none, some } from "fp-ts/lib/Option";
-import sortBy = require("lodash/sortBy");
 
 import "./explorer.scss";
 

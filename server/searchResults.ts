@@ -1,28 +1,32 @@
 import * as scrapeIt from "scrape-it";
 import { flatten, sortBy } from "lodash";
 import * as queryString from "query-string";
-import { SearchResultCar, ObjectOmit } from "../web/src/model";
+import { ScrapedCar, SearchResultCar } from "./model";
+import { addCoordinatesToCars, parsePrice, haversineFormula } from "./utils";
 
 const searches = [
-  ["VW", "Transporter"],
-  ["Renault", "Trafic"],
-  ["Opel", "Vivaro"],
-  ["Fiat", "Scudo"],
-  ["Fiat", "Ducato"],
-  ["Mercedes", "Vito"],
-  ["Hyundai", "H-1"],
-  ["Nissan", "Vanette"],
-  ["Peugeot", "Expert"],
-  ["Citroen", "Jumpy"],
+  // ["VW", "Transporter"],
+  // ["Renault", "Trafic"],
+  // ["Opel", "Vivaro"],
+  // ["Fiat", "Scudo"],
+  // ["Fiat", "Ducato"],
+  // ["Mercedes", "Vito"],
+  // ["Hyundai", "H-1"],
+  // ["Nissan", "Vanette"],
+  // ["Peugeot", "Expert"],
+  // ["Citroen", "Jumpy"],
   ["Ford", "Transit"]
 ];
+
+const malaga4 = { lat: 45.4443763, lng: 9.1591521 };
+const burago = { lat: 45.5915137, lng: 9.374666 };
 
 const computeSearchUrl = (brand: string, model: string) => {
   const query = queryString.stringify({
     "s[brand]": brand,
     "s[car_model]": model,
     "s[close_to_postcode]": 20143,
-    "s[distance_in_meters]": 50000,
+    "s[distance_in_meters]": 75000,
     "s[min_price]": 510,
     "s[max_price]": 3000,
     "s[order_by]": "cars.price+ASC"
@@ -31,18 +35,10 @@ const computeSearchUrl = (brand: string, model: string) => {
   return `https://www.autouncle.it/en/cars_search?${query}`;
 };
 
-type ScrapedSearchResultCar = ObjectOmit<
-  SearchResultCar,
-  "price" | "distanceFromMilan" | "distanceFromCarnate"
-> & {
-  price: string;
-  distance: string;
-};
-
 export default () => {
   return Promise.all(
     searches.map(([brand, model]) => {
-      return scrapeIt<{ cars: ScrapedSearchResultCar[] }>(
+      return scrapeIt<{ cars: ScrapedCar[] }>(
         {
           url: computeSearchUrl(brand, model),
           headers: {
@@ -90,23 +86,29 @@ export default () => {
           !c.name.toLowerCase().includes("rent")
       )
     )
+    .then(parsePrice)
+    .then(addCoordinatesToCars)
     .then(
       (cars): SearchResultCar[] =>
         cars.map(c => {
-          const price = parseInt(
-            c.price
-              .replace("€", "")
-              .replace(".", "")
-              .replace(",", "")
-          );
           return {
             ...c,
             url: `https://www.autouncle.it${c.url}`,
-            distanceFromMilano: "",
-            distanceFromCarnate: "",
-            price
+            distanceFromMilano: c.coordinates
+              ? haversineFormula(c.coordinates, malaga4)
+              : null,
+            distanceFromBurago: c.coordinates
+              ? haversineFormula(c.coordinates, burago)
+              : null
           };
         })
+    )
+    .then(cars =>
+      cars.filter(
+        c =>
+          (c.distanceFromBurago === null || c.distanceFromBurago < 50) &&
+          (c.distanceFromMilano === null || c.distanceFromMilano < 50)
+      )
     )
     .then(cars => sortBy(cars, "price"));
 };

@@ -1,4 +1,6 @@
 import { HistoryLocation } from "@buildo/bento/data";
+import { Car, SearchResultCar } from "../../../server/model";
+export { Car, SearchResultCar };
 
 export { HistoryLocation };
 
@@ -46,35 +48,3 @@ export type GeoJSONFeatureCollection = {
 };
 
 export type Route = GeoJSONFeature & { id: string };
-
-export type Car = {
-  name: string;
-  address: string;
-  engine: string;
-  year: string;
-  km: string;
-  price: number;
-  image: string;
-  url: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-};
-
-export type SearchResultCar = {
-  name: string;
-  address: string;
-  engine: string;
-  year: string;
-  km: string;
-  price: number;
-  image: string;
-  url: string;
-  distanceFromMilano: string;
-  distanceFromCarnate: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-};

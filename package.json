@@ -12,7 +12,23 @@
   },
   "dependencies": {
     "@buildo/bento": "^10.0.0",
+    "@types/classnames": "^2.2.3",
+    "@types/cors": "^2.8.4",
     "@types/express": "^4.16.1",
+    "@types/file-saver": "^2.0.0",
+    "@types/fixed-data-table": "^0.6.32",
+    "@types/lodash": "^4.14.93",
+    "@types/mapbox-gl": "^0.51.3",
+    "@types/node": "^9.3.0",
+    "@types/node-fetch": "^2.1.4",
+    "@types/qs": "^6.5.1",
+    "@types/query-string": "^6.2.0",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-intl": "^2.3.3",
+    "@types/react-select": "^1.1.0",
+    "@types/react-transition-group": "^2.0.6",
+    "@types/remarkable": "^1.7.2",
     "classnames": "^2.2.5",
     "cors": "^2.8.5",
     "es6-promise": "^4.2.2",
@@ -30,25 +46,11 @@
     "scrape-it": "^5.1.4",
     "string-to-color": "^2.0.1",
     "togpx": "^0.5.4",
-    "ts-node": "^8.0.2",
-    "@types/classnames": "^2.2.3",
-    "@types/cors": "^2.8.4",
-    "@types/file-saver": "^2.0.0",
-    "@types/fixed-data-table": "^0.6.32",
-    "@types/lodash": "^4.14.93",
-    "@types/mapbox-gl": "^0.51.3",
-    "@types/node": "^9.3.0",
-    "@types/node-fetch": "^2.1.4",
-    "@types/qs": "^6.5.1",
-    "@types/query-string": "^6.2.0",
-    "@types/react": "^16.0.34",
-    "@types/react-dom": "^16.0.3",
-    "@types/react-intl": "^2.3.3",
-    "@types/react-select": "^1.1.0",
-    "@types/react-transition-group": "^2.0.6",
-    "@types/remarkable": "^1.7.2"
+    "ts-node": "^8.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.32"
+  },
   "resolutions": {
     "scriptoni": "^6.1.0"
   }
