@@ -102,15 +102,6 @@ class App extends React.PureComponent<Props> {
     );
   }
 
-  getRouteColor(route: Route): string {
-    return (this.props.selectedRoute.isSome() &&
-      route === this.props.selectedRoute.value) ||
-      (this.props.hoveredRoute.isSome() &&
-        route === this.props.hoveredRoute.value)
-      ? "#387ddf"
-      : route.properties.color;
-  }
-
   addLayers() {
     this.map.map(map => {
       this.props.routes.forEach(route => {
@@ -124,10 +115,6 @@ class App extends React.PureComponent<Props> {
           layout: {
             "line-join": "round",
             "line-cap": "round"
-          },
-          paint: {
-            "line-width": 3,
-            "line-color": this.getRouteColor(route)
           }
         };
 
@@ -193,15 +180,6 @@ class App extends React.PureComponent<Props> {
     });
   }, 60);
 
-  updateLayers() {
-    this.map.map(map => {
-      this.props.routes.forEach(route => {
-        // update color
-        map.setPaintProperty(route.id, "line-color", this.getRouteColor(route));
-      });
-    });
-  }
-
   flyToRoute(route: Route, options?: mapboxgl.FitBoundsOptions) {
     this.map.map(map => {
       const coordinates = route.geometry.coordinates as [number, number][];
@@ -255,7 +233,6 @@ class App extends React.PureComponent<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    this.updateLayers();
     this.updateSelectedRoutePopup();
     this.updateHoveredRoutePopup();
 

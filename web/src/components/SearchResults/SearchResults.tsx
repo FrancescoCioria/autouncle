@@ -67,7 +67,7 @@ class SearchResults extends React.Component<Props, State> {
               : "";
 
           return (
-            <View className="car" shrink={false}>
+            <View className="car" shrink={false} key={car.url}>
               <img
                 width={233}
                 height={175}
@@ -135,6 +135,21 @@ class SearchResults extends React.Component<Props, State> {
                     : "-"}
                 </View>
               </View>
+              <iframe
+                style={{ marginLeft: "auto" }}
+                width={350}
+                height={199}
+                id="gmap_canvas"
+                src={`https://maps.google.com/maps?q=${
+                  car.coordinates
+                    ? `${car.coordinates.lat},${car.coordinates.lng}`
+                    : car.address
+                }&hl=en&t=&z=9&iwloc=B&output=embed`}
+                frameBorder="0"
+                scrolling="no"
+                marginHeight={0}
+                marginWidth={0}
+              />
             </View>
           );
         })}

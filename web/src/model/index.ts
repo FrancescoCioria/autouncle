@@ -33,13 +33,7 @@ export type Geometry = {
 
 export type GeoJSONFeature = {
   type: "Feature";
-  properties: {
-    name: string;
-    color: string;
-    length: string;
-    elevationGain: number;
-    url: string;
-  } & Car;
+  properties: Car;
   geometry: Geometry;
 };
 export type GeoJSONFeatureCollection = {
@@ -48,3 +42,21 @@ export type GeoJSONFeatureCollection = {
 };
 
 export type Route = GeoJSONFeature & { id: string };
+
+export const routeFromCar = (car: Car): Route => ({
+  id: JSON.stringify(car),
+  type: "Feature" as "Feature",
+  geometry: {
+    type: "LineString" as "LineString",
+    coordinates: [
+      [
+        car.coordinates ? car.coordinates.lng : 0,
+        car.coordinates ? car.coordinates.lat : 0,
+        0
+      ] as [number, number, number]
+    ]
+  },
+  properties: {
+    ...car
+  }
+});
