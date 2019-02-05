@@ -4,8 +4,7 @@ import { sortBy } from "lodash";
 import {
   Car,
   ScrapedCar,
-  ScrapedCarWithParsedPrice,
-  ScrapedCarWithParsedPriceAndCoordinates,
+  ScrapedCarWithCoordinates,
   OpenCageDataResult
 } from "./model";
 
@@ -37,8 +36,8 @@ export const haversineFormula = (
 };
 
 export const addCoordinatesToCars = (
-  cars: ScrapedCarWithParsedPrice[]
-): Promise<ScrapedCarWithParsedPriceAndCoordinates[]> => {
+  cars: ScrapedCar[]
+): Promise<ScrapedCarWithCoordinates[]> => {
   return Promise.all(
     cars.map(car => {
       const query = queryString.stringify({
@@ -80,29 +79,18 @@ export const addCoordinatesToCars = (
   );
 };
 
-export const parsePrice = (
-  cars: Array<ScrapedCar>
-): ScrapedCarWithParsedPrice[] => {
-  return cars.map(car => {
-    const price = parseInt(
-      car.price
-        .replace("€", "")
-        .replace(".", "")
-        .replace(",", "")
-    );
-
-    return {
-      ...car,
-      price
-    };
-  });
+export const parsePrice = (price: string): number => {
+  return parseInt(
+    price
+      .replace("€", "")
+      .replace(".", "")
+      .replace(",", "")
+  );
 };
 
 const malaga4 = { lat: 45.4443763, lng: 9.1591521 };
 const burago = { lat: 45.5915137, lng: 9.374666 };
-export const addDistance = (
-  cars: ScrapedCarWithParsedPriceAndCoordinates[]
-): Car[] =>
+export const addDistance = (cars: ScrapedCarWithCoordinates[]): Car[] =>
   cars.map(c => {
     return {
       ...c,
@@ -115,5 +103,5 @@ export const addDistance = (
     };
   });
 
-export const addHostnameToUrl = (cars: Car[]): Car[] =>
-  cars.map(c => ({ ...c, url: `https://www.autouncle.it${c.url}` }));
+export const addHostnameToUrl = (url: string): string =>
+  `https://www.autouncle.it${url}`;

@@ -34,24 +34,26 @@ const updateFavoriteCars = (): void => {
           engine: ".cell.engine.motor",
           year: ".cell.year",
           km: ".cell.km",
-          price: ".cell.price",
+          price: {
+            selector: ".cell.price",
+            convert: parsePrice
+          },
           image: {
             selector: ".cell.picture > img",
             attr: "src"
           },
           url: {
             selector: ".car_details .location_info > h3 span",
-            attr: "data-js-outgoing-url"
+            attr: "data-js-outgoing-url",
+            convert: addHostnameToUrl
           }
         }
       }
     }
   )
     .then(res => res.data.cars.filter(car => car.name.length > 0))
-    .then(parsePrice)
     .then(addCoordinatesToCars)
     .then(addDistance)
-    .then(addHostnameToUrl)
     .then(cars => {
       const carsGroupedByCoordinates = groupBy(cars, c =>
         JSON.stringify(c.coordinates)

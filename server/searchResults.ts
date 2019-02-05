@@ -62,11 +62,21 @@ const updateSearchResults = (): void => {
             data: {
               name:
                 ".listing-item-car-details-headline-wrapper > h3 > a > span",
-              address: ".car-specification.location > span",
+              address: {
+                selector: ".car-specification.location > span",
+                convert: (address: string) =>
+                  address
+                    .replace("Dealer,", "")
+                    .replace("Private seller,", "")
+                    .trim()
+              },
               engine: ".car-specification.engine",
               year: ".car-specification.year",
               km: ".car-specification.km",
-              price: ".price-container .price",
+              price: {
+                selector: ".price-container .price",
+                convert: parsePrice
+              },
               distance: ".car-specification.location > div",
               image: {
                 selector: ".car-picture > meta",
@@ -74,7 +84,8 @@ const updateSearchResults = (): void => {
               },
               url: {
                 selector: ".listing-item-car-details-headline-wrapper > h3 > a",
-                attr: "href"
+                attr: "href",
+                convert: addHostnameToUrl
               }
             }
           }
@@ -90,10 +101,8 @@ const updateSearchResults = (): void => {
           !c.name.toLowerCase().includes("rent")
       )
     )
-    .then(parsePrice)
     .then(addCoordinatesToCars)
     .then(addDistance)
-    .then(addHostnameToUrl)
     .then(cars =>
       cars.filter(
         c =>

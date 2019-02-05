@@ -8,21 +8,17 @@ export type ScrapedCar = {
   km: string;
   image: string;
   url: string;
-  price: string;
-};
-
-export type ScrapedCarWithParsedPrice = ObjectOmit<ScrapedCar, "price"> & {
   price: number;
 };
 
-export type ScrapedCarWithParsedPriceAndCoordinates = ScrapedCarWithParsedPrice & {
+export type ScrapedCarWithCoordinates = ScrapedCar & {
   coordinates: {
     lat: number;
     lng: number;
   } | null;
 };
 
-export type Car = ScrapedCarWithParsedPriceAndCoordinates & {
+export type Car = ScrapedCarWithCoordinates & {
   distanceFromMilano: number | null;
   distanceFromBurago: number | null;
 };
