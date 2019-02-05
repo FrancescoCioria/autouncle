@@ -6,7 +6,7 @@ export type CurrentView = { view: "favoriteCars" } | { view: "searchResults" };
 
 export function locationToView(location: HistoryLocation): CurrentView {
   switch (location.pathname) {
-    case "/searchResults":
+    case "/autouncle/searchResults":
       return { view: "searchResults" };
     default:
       return { view: "favoriteCars" };
@@ -16,9 +16,9 @@ export function locationToView(location: HistoryLocation): CurrentView {
 export function viewToLocation(view: CurrentView): HistoryLocation {
   switch (view.view) {
     case "searchResults":
-      return { pathname: "/searchResults", search: {} };
+      return { pathname: "/autouncle/searchResults", search: {} };
     case "favoriteCars":
-      return { pathname: "/favoriteCars", search: {} };
+      return { pathname: "/autouncle/favoriteCars", search: {} };
   }
 }
 

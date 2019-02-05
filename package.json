@@ -5,7 +5,7 @@
     "start": "yarn web-start & yarn server-start",
     "web-start": "scriptoni web-dev --paths web/paths.js -c ./web/config",
     "web-build": "NODE_ENV=production bento web-build -c web/config --paths web/paths.js --webpackConfig web/webpackConfig.js",
-    "deploy": "yarn build && git add docs && git commit -m 'update github page' && git push",
+    "deploy": "yarn web-build && git add docs && git commit -m 'update github page' && git push && git push heroku master",
     "prettier-check": "bento prettier-check",
     "prettier-write": "bento prettier-write",
     "server-start": "node server/server"

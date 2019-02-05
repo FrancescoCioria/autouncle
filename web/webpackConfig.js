@@ -4,7 +4,7 @@ module.exports = (config, { NODE_ENV }) => {
       ...config,
       output: {
         ...config.output,
-        publicPath: "/Explorer/"
+        publicPath: "/autouncle/"
       }
     };
   } else {
