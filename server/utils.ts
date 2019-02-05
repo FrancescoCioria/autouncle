@@ -50,11 +50,7 @@ export const addCoordinatesToCars = (
       return fetch(`https://api.opencagedata.com/geocode/v1/json?${query}`)
         .then(res => res.json() as Promise<{ results: OpenCageDataResult[] }>)
         .then(res => {
-          if (res.results.length === 0) {
-            return { ...car, coordinates: null };
-          }
-
-          const _results = res.results.filter(
+          const results = res.results.filter(
             r =>
               r.formatted !== "Milano, Bergamo, Italy" &&
               (r.components._type === "village" ||
@@ -62,7 +58,9 @@ export const addCoordinatesToCars = (
                 r.components._type === "neighbourhood")
           );
 
-          const results = _results.length > 0 ? _results : res.results;
+          if (results.length === 0) {
+            return { ...car, coordinates: null };
+          }
 
           const highestConfidence = results.reduce(
             (acc, res) => (res.confidence > acc ? res.confidence : acc),
