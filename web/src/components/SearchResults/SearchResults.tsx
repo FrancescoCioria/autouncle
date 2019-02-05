@@ -25,37 +25,90 @@ class SearchResults extends React.Component<Props> {
         <h2 style={{ marginLeft: 16, marginBottom: 0 }}>
           {cars.value.length} Risultati
         </h2>
-        {cars.value.map(car => (
-          <View className="car" shrink={false}>
-            <img width={184} height={138} src={car.image} />
-            <View column>
-              <a href={car.url} target="_blank" className="name">
-                {car.name}
-              </a>
-              <View className="property" vAlignContent="bottom" shrink={false}>
-                <label>Price</label> {car.price} €
-              </View>
-              <View className="property" vAlignContent="bottom" shrink={false}>
-                <label>Km</label> {car.km}
-              </View>
-              <View className="property" vAlignContent="bottom" shrink={false}>
-                <label>Year</label> {car.year}
-              </View>
-              <View className="property" vAlignContent="bottom" shrink={false}>
-                <label>Engine</label> {car.engine}
-              </View>
-              <View className="property" vAlignContent="bottom" shrink={false}>
-                <label>Address</label>{" "}
+        {cars.value.map(car => {
+          const distanceFromMilano = car.distanceFromMilano
+            ? `da buildo: ${car.distanceFromMilano.toFixed(0)} km`
+            : "";
+          const distanceFromBurago = car.distanceFromBurago
+            ? `da Burago: ${car.distanceFromBurago.toFixed(0)} km`
+            : "";
+          const distance =
+            distanceFromMilano || distanceFromBurago
+              ? `(${distanceFromMilano}, ${distanceFromBurago})`
+              : "";
+
+          return (
+            <View className="car" shrink={false}>
+              <img
+                width={233}
+                height={175}
+                style={{ background: "#eaeaea" }}
+                src={car.image}
+              />
+              <View column>
+                <a href={car.url} target="_blank" className="name">
+                  {car.name}
+                </a>
                 <View
-                  style={{ width: "calc(100% - 60px)" }}
+                  className="property"
                   vAlignContent="bottom"
+                  shrink={false}
                 >
-                  <TextOverflow label={car.address} />
+                  <label>Prezzo</label> {car.price} €
+                </View>
+                <View
+                  className="property"
+                  vAlignContent="bottom"
+                  shrink={false}
+                >
+                  <label>Km</label> {car.km}
+                </View>
+                <View
+                  className="property"
+                  vAlignContent="bottom"
+                  shrink={false}
+                >
+                  <label>Anno</label> {car.year}
+                </View>
+                <View
+                  className="property"
+                  vAlignContent="bottom"
+                  shrink={false}
+                >
+                  <label>Motore</label> {car.engine}
+                </View>
+                <View
+                  className="property"
+                  vAlignContent="bottom"
+                  shrink={false}
+                >
+                  <label>Indirizzo</label>
+                  {` ${car.address}`}
+                </View>
+                <View
+                  className="property"
+                  vAlignContent="bottom"
+                  shrink={false}
+                >
+                  <label>Da buildo</label>{" "}
+                  {car.distanceFromMilano
+                    ? `${car.distanceFromMilano.toFixed(0)} km`
+                    : "-"}
+                </View>
+                <View
+                  className="property"
+                  vAlignContent="bottom"
+                  shrink={false}
+                >
+                  <label>Da Burago</label>{" "}
+                  {car.distanceFromBurago
+                    ? `${car.distanceFromBurago.toFixed(0)} km`
+                    : "-"}
                 </View>
               </View>
             </View>
-          </View>
-        ))}
+          );
+        })}
       </View>
     );
   }
