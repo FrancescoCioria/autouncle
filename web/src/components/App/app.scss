@@ -1,0 +1,18 @@
+.app {
+  .nav-bar {
+    height: 60px;
+    background: white;
+    border-bottom: 1px solid #eaeaea;
+
+    .nav-item {
+      height: 100%;
+      padding: 0 32px;
+      cursor: pointer;
+
+      &:hover,
+      &.is-selected {
+        background: #eaeaea;
+      }
+    }
+  }
+}

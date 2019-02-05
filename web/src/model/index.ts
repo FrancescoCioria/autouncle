@@ -2,6 +2,8 @@ import { HistoryLocation } from "@buildo/bento/data";
 
 export { HistoryLocation };
 
+export type ObjectOmit<O, K extends string> = Pick<O, Exclude<keyof O, K>>;
+
 export type CurrentView = { view: "favoriteCars" } | { view: "searchResults" };
 
 export function locationToView(location: HistoryLocation): CurrentView {
@@ -54,6 +56,23 @@ export type Car = {
   price: number;
   image: string;
   url: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+};
+
+export type SearchResultCar = {
+  name: string;
+  address: string;
+  engine: string;
+  year: string;
+  km: string;
+  price: number;
+  image: string;
+  url: string;
+  distanceFromMilano: string;
+  distanceFromCarnate: string;
   coordinates: {
     lat: number;
     lng: number;

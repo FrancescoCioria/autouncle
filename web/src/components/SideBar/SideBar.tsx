@@ -74,7 +74,6 @@ class SideBar extends React.Component<Props> {
   render() {
     return (
       <View className="side-bar" column shrink={false}>
-        <h2>Routes</h2>
         {this.props.routes.map((route, index) => (
           <Route
             key={index}

@@ -22,7 +22,9 @@ class SearchResults extends React.Component<Props> {
 
     return (
       <View className="search-results" column grow>
-        <h2>{cars.value.length} Risultati</h2>
+        <h2 style={{ marginLeft: 16, marginBottom: 0 }}>
+          {cars.value.length} Risultati
+        </h2>
         {cars.value.map(car => (
           <View className="car" shrink={false}>
             <img width={184} height={138} src={car.image} />
