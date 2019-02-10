@@ -4,7 +4,8 @@ import {
   addCoordinatesToCars,
   parsePrice,
   addDistance,
-  addHostnameToUrl
+  addHostnameToUrl,
+  getId
 } from "./utils";
 import { ScrapedCar, Car } from "./model";
 
@@ -42,6 +43,11 @@ const updateFavoriteCars = (): void => {
           image: {
             selector: ".cell.picture > img",
             attr: "src"
+          },
+          id: {
+            selector: ".cell.picture > img",
+            attr: "src",
+            convert: getId
           },
           url: {
             selector: ".car_details .location_info > h3 span",

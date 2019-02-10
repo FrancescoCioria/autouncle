@@ -1,6 +1,7 @@
 export type ObjectOmit<O, K extends string> = Pick<O, Exclude<keyof O, K>>;
 
 export type ScrapedCar = {
+  id: string;
   name: string;
   address: string;
   engine: string;

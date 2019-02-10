@@ -6,7 +6,8 @@ import {
   addCoordinatesToCars,
   parsePrice,
   addDistance,
-  addHostnameToUrl
+  addHostnameToUrl,
+  getId
 } from "./utils";
 
 const searches = [
@@ -104,6 +105,11 @@ const updateSearchResults = (): void => {
                 selector: ".car-picture > meta",
                 attr: "content"
               },
+              id: {
+                selector: ".car-picture > meta",
+                attr: "content",
+                convert: getId
+              },
               url: {
                 selector: ".listing-item-car-details-headline-wrapper > h3 > a",
                 attr: "href",
@@ -115,7 +121,7 @@ const updateSearchResults = (): void => {
       );
     })
   )
-    .then(res => flatten(res.map(r => r.data.cars)))
+    .then(res => flatten(res.map(r => r.data.cars)).filter(car => car.id))
     .then(cars =>
       cars.filter(
         c =>

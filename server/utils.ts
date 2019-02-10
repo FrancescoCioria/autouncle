@@ -105,3 +105,9 @@ export const addDistance = (cars: ScrapedCarWithCoordinates[]): Car[] =>
 
 export const addHostnameToUrl = (url: string): string =>
   `https://www.autouncle.it${url}`;
+
+export const getId = (imageUrl: string) => {
+  const regexp = /https:\/\/images\.autouncle\.com\/it\/car_images\/(.+)_/;
+  const res = imageUrl.match(regexp);
+  return res ? res[1] : "";
+};
