@@ -20,7 +20,6 @@ const searches = [
   ["Fiat", "Scudo"],
   ["Fiat", "Ducato"],
   ["Mercedes", "Vito"],
-  ["Mercedes", "Viano"],
   ["Hyundai", "H-1"],
   ["Hyundai", "H 100"],
   ["Hyundai", "H 200"],
