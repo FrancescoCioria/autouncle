@@ -44,6 +44,20 @@ const searches = [
   ["Toyota", "HiAce"]
 ];
 
+const blacklist = [
+  // duplicates
+  "caf57d15-730c-46d1-a5a5-240c8adb34cc",
+  "d938479e-a0fa-4e17-b6b7-6650f79c43ed",
+  "c6c2adb7-2e2e-4f80-b431-8037a6e1e368",
+  "a8c5b624-6668-47a4-a4aa-b1f0f8fa7055",
+  "33889ee5-3ebf-44ca-8586-4b24f0eab9e8",
+
+  // no roof
+  "f7896bb6-e4d2-4215-875c-05b481f3c742",
+  "86b97ac1-ea6d-48fd-9448-147d35378a46",
+  "1b5973e8-1cef-4a6d-95b1-2d9ad7ae8cd7"
+];
+
 const computeSearchUrl = (brand: string, model: string, variant?: string) => {
   const query = queryString.stringify({
     "s[brand]": brand,
@@ -128,7 +142,8 @@ const updateSearchResults = (): void => {
       cars.filter(
         c =>
           !c.name.toLowerCase().includes("noleggio") &&
-          !c.name.toLowerCase().includes("rent")
+          !c.name.toLowerCase().includes("rent") &&
+          !blacklist.includes(c.id)
       )
     )
     .then(addCoordinatesToCars)
