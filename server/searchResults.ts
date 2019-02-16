@@ -51,6 +51,7 @@ const computeSearchUrl = (brand: string, model: string, variant?: string) => {
     "s[distance_in_meters]": 100000,
     "s[min_price]": 510,
     "s[max_price]": 3000,
+    "s[min_year]": 2001,
     "s[order_by]": "cars.price+ASC",
     "s[variant]": variant
   });
