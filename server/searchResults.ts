@@ -51,6 +51,7 @@ const blacklist = [
   "c6c2adb7-2e2e-4f80-b431-8037a6e1e368",
   "a8c5b624-6668-47a4-a4aa-b1f0f8fa7055",
   "33889ee5-3ebf-44ca-8586-4b24f0eab9e8",
+  "5df90e0c-fb31-4b20-8222-d4e8c3fee719",
 
   // no roof
   "f7896bb6-e4d2-4215-875c-05b481f3c742",
