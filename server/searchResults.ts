@@ -24,7 +24,7 @@ const searches = [
   ["Hyundai", "H-1"],
   ["Hyundai", "H 100"],
   ["Hyundai", "H 200"],
-  ["Nissan", "Vanette"],
+  // ["Nissan", "Vanette"],
   ["Nissan", "Primastar"],
   ["Nissan", "NV200"],
   ["Nissan", "Interstar"],
